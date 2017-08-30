@@ -16,23 +16,17 @@ func _ready():
 	randomize()
 	retrieve_textures()
 	start_cards()
+	timer1.connect("timeout", self, "_emit_timer_end_signal")
 	pass
 
 func start_game():
-	#clean_container()
-	
 	pass
 
 func retrieve_textures():
-	var hidden_texture = load("res://sprites/car.png")
-	var possible_textures = [
-		load("res://sprites/car1.png"),
-		load("res://sprites/car2.png"),
-		load("res://sprites/car3.png"),
-		load("res://sprites/car4.png"),
-		load("res://sprites/car5.png"),
-		load("res://sprites/car6.png")
-	]
+	print(game.get_playing_card())
+	var textures = game.get_playing_textures()
+	var hidden_texture = textures["hidden"]
+	var possible_textures = textures["possible"]
 	var number = 1
 	for texture in possible_textures:
 		for i in range(2): 
@@ -48,7 +42,7 @@ func retrieve_textures():
 func start_cards():
 	print ("starting cards")
 	print ("Set all to 0")
-	next_position_x = 0
+	next_position_x = 30
 	next_position_y = 0
 	cards = shuffleList(possible_cards)
 	for card in cards:
@@ -79,9 +73,8 @@ func load_card(car_obj):
 	bcard.change_position(next_position_x, next_position_y)
 	bcard.set_card_obj(car_obj)
 	next_position_x = (next_position_x + bcard.get_width_size() + 5)
-	#if next_position_x + bcard.get_width_size() > Globals.get("display/width") / 2:
 	if next_position_x + bcard.get_width_size() > Globals.get("display/width"):
-		next_position_x = 0
+		next_position_x = 30
 		next_position_y = (next_position_y + bcard.get_height_size() + 5)
 	bcard.connect("pressed", self, "_card_is_pressed",[bcard])
 	return bcard
@@ -100,6 +93,7 @@ func _card_is_pressed(element):
 				_last_press_object._do_disable_card()
 				if _mark_card_as_check_and_check_win(element, _last_press_object):
 					_show_win_anim(4)
+					clean_container()
 					pass
 				else:
 					_show_good_anim(2)
@@ -129,7 +123,6 @@ func _mark_card_as_check_and_check_win(card1, card2):
 func _run_timer(time):
 	timer1.set_wait_time(time)
 	timer1.set_timer_process_mode(0)
-	timer1.connect("timeout", self, "_emit_timer_end_signal")
 	timer1.start()
 	
 func _emit_timer_end_signal():
@@ -137,11 +130,13 @@ func _emit_timer_end_signal():
 
 func _show_win_anim(time):
 	anim_win.show()
-	utils.get_main_node().find_node("layer_anim").get_node("anim").play("temple")
+	anim_win.set_animation("temple")
+	anim_win.play("temple")
 	_run_timer(time)
 	yield(self, "timer_end")
-	anim_win.hide()
-	start_game()
+	anim_win.set_animation("santa")
+	anim_win.play("santa")
+	find_node("btn_menu").set_hidden(false)
 	pass
 
 func _show_good_anim(time):

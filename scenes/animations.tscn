@@ -136,6 +136,7 @@ alignment = 0
 visibility/visible = false
 frames = SubResource( 1 )
 animation = "default"
+frame = 1
 playing = true
 
 [node name="anim_good" type="AnimatedSprite" parent="."]
@@ -143,15 +144,14 @@ playing = true
 visibility/visible = false
 frames = SubResource( 2 )
 animation = "default"
-frame = 1
+frame = 2
 playing = true
 
 [node name="anim_win" type="AnimatedSprite" parent="."]
 
 visibility/visible = false
 frames = SubResource( 3 )
-animation = "santa"
-frame = 21
+animation = "temple"
 
 [node name="anim" type="AnimationPlayer" parent="."]
 
