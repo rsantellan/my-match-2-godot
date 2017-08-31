@@ -2,15 +2,16 @@
 extends Node
 
 var x = 0
-var y = 30
-var ydelta = 30
+var y = 80
+var ydelta = 50
 
 func _ready():
-	x = (Globals.get("display/width") / 2) - 25;
+	x = (Globals.get("display/width") / 2) - 50;
 	_do_create_buttons()
 	pass
 
 func _do_create_buttons():
+	var y = (Globals.get("display/height") / 2) - (game.get_possible_cards().size() * ydelta);
 	for possible in game.get_possible_cards():
 		var menu_button = load("res://scenes/menu_button.tscn")
 		var button = menu_button.instance()

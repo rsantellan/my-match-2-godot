@@ -33,6 +33,7 @@ func load_possible_cards():
 		if(possible_cards.size() == 0):
 			possible_cards.append("cars")
 			possible_cards.append("family")
+			possible_cards.append("frozen")
 		_initialized = true
 	pass
 	
@@ -61,11 +62,14 @@ func get_playing_textures():
 	if(get_playing_card() == "family"):
 		textures = _load_family_textures()
 	else:
-		if(get_playing_card() == "family"):
+		if(get_playing_card() == "cars"):
 			textures = _load_car_textures()
 		else:
-			if(_possible_cards.has(get_playing_card())):
-				textures = _load_online_textures()
+			if(get_playing_card() == "frozen"):
+				textures = _load_frozen_textures()
+			else:
+				if(_possible_cards.has(get_playing_card())):
+					textures = _load_online_textures()
 	if(textures.empty()):
 		textures = _load_car_textures()
 	return textures
@@ -110,3 +114,17 @@ func _load_family_textures():
 		load("res://sprites/family/family6.png")
 	]
 	return textures
+	
+
+func _load_frozen_textures():
+	var textures = {}
+	textures["hidden"] = load("res://sprites/card-background.png")
+	textures["possible"] = [
+		load("res://sprites/frozen/anna.png"),
+		load("res://sprites/frozen/elsa.png"),
+		load("res://sprites/frozen/hans.png"),
+		load("res://sprites/frozen/kristoff.png"),
+		load("res://sprites/frozen/olaf.png"),
+		load("res://sprites/frozen/sven.png")
+	]
+	return textures	

@@ -1,2 +1,6 @@
 !sprites/family/.gitkeep
 /sprites/family/*
+!sprites/frozen/.gitkeep
+/sprites/frozen/*
+!sounds/music/.gitkeep
+/sounds/music/*

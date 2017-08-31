@@ -13,6 +13,9 @@ onready var anim_win = utils.get_main_node().find_node("anim_win")
 signal timer_end
 
 func _ready():
+	var streamPlayer = get_node("stream_background_music")
+	streamPlayer.set_stream(load("res://sounds/music/opening_themes_introduction.ogg"))
+	streamPlayer.play()
 	randomize()
 	retrieve_textures()
 	start_cards()
@@ -129,11 +132,16 @@ func _emit_timer_end_signal():
 	emit_signal("timer_end")
 
 func _show_win_anim(time):
+	var streamPlayer = get_node("stream_background_music")
+	streamPlayer.set_stream(load("res://sounds/music/cue1.ogg"))
+	streamPlayer.play()
 	anim_win.show()
 	anim_win.set_animation("temple")
 	anim_win.play("temple")
 	_run_timer(time)
 	yield(self, "timer_end")
+	streamPlayer.set_stream(load("res://sounds/music/cue2.ogg"))
+	streamPlayer.play()
 	anim_win.set_animation("santa")
 	anim_win.play("santa")
 	find_node("btn_menu").set_hidden(false)
