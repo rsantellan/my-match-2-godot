@@ -28,12 +28,13 @@ func _load_from_url():
 func load_possible_cards():
 	if !_initialized:
 		_load_from_url()
-		print("possible cards")
-		print(possible_cards)
+		#print("possible cards")
+		#print(possible_cards)
 		if(possible_cards.size() == 0):
-			possible_cards.append("cars")
-			possible_cards.append("family")
-			possible_cards.append("frozen")
+			possible_cards.append("1 - cars")
+			possible_cards.append("2 - family")
+			possible_cards.append("3 - frozen")
+			possible_cards.append("4 - mermaid")
 			possible_cards.append("dora")
 		_initialized = true
 	pass
@@ -55,25 +56,23 @@ func get_possible_cards():
 	
 func get_playing_card():
 	if playing_card == null:
-		return "cars"
+		return "1 - cars"
 	return playing_card
 	
 func get_playing_textures():
 	var textures = {}
-	if(get_playing_card() == "family"):
+	if(get_playing_card() == "1 - cars"):
+		textures = _load_car_textures()
+	if(get_playing_card() == "2 - family"):
 		textures = _load_family_textures()
-	else:
-		if(get_playing_card() == "cars"):
-			textures = _load_car_textures()
-		else:
-			if(get_playing_card() == "frozen"):
-				textures = _load_frozen_textures()
-			else:
-				if(get_playing_card() == "dora"):
-					textures = _load_dora_textures()
-				else:
-					if(_possible_cards.has(get_playing_card())):
-						textures = _load_online_textures()
+	if(get_playing_card() == "3 - frozen"):
+		textures = _load_frozen_textures()
+	if(get_playing_card() == "4 - mermaid"):
+		textures = _load_mermaid_textures()
+	if(_possible_cards.has(get_playing_card())):
+		textures = _load_online_textures()
+	if(get_playing_card() == "dora"):
+		textures = _load_dora_textures()
 	if(textures.empty()):
 		textures = _load_car_textures()
 	return textures
@@ -118,7 +117,19 @@ func _load_family_textures():
 		load("res://sprites/family/family6.png")
 	]
 	return textures
-	
+
+func _load_mermaid_textures():
+	var textures = {}
+	textures["hidden"] = load("res://sprites/card-background.png")
+	textures["possible"] = [
+		load("res://sprites/mermaid/mermaid1.png"),
+		load("res://sprites/mermaid/mermaid2.png"),
+		load("res://sprites/mermaid/mermaid3.png"),
+		load("res://sprites/mermaid/mermaid4.png"),
+		load("res://sprites/mermaid/mermaid5.png"),
+		load("res://sprites/mermaid/mermaid6.png")
+	]
+	return textures	
 
 func _load_frozen_textures():
 	var textures = {}

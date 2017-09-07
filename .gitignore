@@ -4,5 +4,7 @@
 /sprites/frozen/*
 !sprites/dora/.gitkeep
 /sprites/dora/*
+!sprites/mermaid/.gitkeep
+/sprites/mermaid/*
 !sounds/music/.gitkeep
 /sounds/music/*
