@@ -34,6 +34,7 @@ func load_possible_cards():
 			possible_cards.append("cars")
 			possible_cards.append("family")
 			possible_cards.append("frozen")
+			possible_cards.append("dora")
 		_initialized = true
 	pass
 	
@@ -68,8 +69,11 @@ func get_playing_textures():
 			if(get_playing_card() == "frozen"):
 				textures = _load_frozen_textures()
 			else:
-				if(_possible_cards.has(get_playing_card())):
-					textures = _load_online_textures()
+				if(get_playing_card() == "dora"):
+					textures = _load_dora_textures()
+				else:
+					if(_possible_cards.has(get_playing_card())):
+						textures = _load_online_textures()
 	if(textures.empty()):
 		textures = _load_car_textures()
 	return textures
@@ -128,3 +132,16 @@ func _load_frozen_textures():
 		load("res://sprites/frozen/sven.png")
 	]
 	return textures	
+
+func _load_dora_textures():
+	var textures = {}
+	textures["hidden"] = load("res://sprites/card-background.png")
+	textures["possible"] = [
+		load("res://sprites/dora/dora1.png"),
+		load("res://sprites/dora/dora2.png"),
+		load("res://sprites/dora/dora3.png"),
+		load("res://sprites/dora/dora4.png"),
+		load("res://sprites/dora/dora5.png"),
+		load("res://sprites/dora/dora6.png")
+	]
+	return textures		

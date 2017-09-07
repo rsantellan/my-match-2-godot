@@ -2,5 +2,7 @@
 /sprites/family/*
 !sprites/frozen/.gitkeep
 /sprites/frozen/*
+!sprites/dora/.gitkeep
+/sprites/dora/*
 !sounds/music/.gitkeep
 /sounds/music/*
