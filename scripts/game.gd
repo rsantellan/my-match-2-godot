@@ -35,6 +35,7 @@ func load_possible_cards():
 			possible_cards.append("2 - family")
 			possible_cards.append("3 - frozen")
 			possible_cards.append("4 - mermaid")
+			possible_cards.append("5 - sofia")
 			possible_cards.append("dora")
 		_initialized = true
 	pass
@@ -73,6 +74,9 @@ func get_playing_textures():
 		textures = _load_online_textures()
 	if(get_playing_card() == "dora"):
 		textures = _load_dora_textures()
+	if(get_playing_card() == "5 - sofia"):
+		textures = _load_sofia_textures()
+	
 	if(textures.empty()):
 		textures = _load_car_textures()
 	return textures
@@ -155,4 +159,17 @@ func _load_dora_textures():
 		load("res://sprites/dora/dora5.png"),
 		load("res://sprites/dora/dora6.png")
 	]
-	return textures		
+	return textures	
+	
+func _load_sofia_textures():
+	var textures = {}
+	textures["hidden"] = load("res://sprites/card-background.png")
+	textures["possible"] = [
+		load("res://sprites/sofia/amber.png"),
+		load("res://sprites/sofia/bailywick.png"),
+		load("res://sprites/sofia/jade.png"),
+		load("res://sprites/sofia/james.png"),
+		load("res://sprites/sofia/ruby.png"),
+		load("res://sprites/sofia/sofia.png")
+	]
+	return textures	

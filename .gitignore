@@ -6,5 +6,7 @@
 /sprites/dora/*
 !sprites/mermaid/.gitkeep
 /sprites/mermaid/*
+!sprites/sofia/.gitkeep
+/sprites/sofia/*
 !sounds/music/.gitkeep
 /sounds/music/*
