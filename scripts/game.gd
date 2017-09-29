@@ -36,7 +36,9 @@ func load_possible_cards():
 			possible_cards.append("3 - frozen")
 			possible_cards.append("4 - mermaid")
 			possible_cards.append("5 - sofia")
-			possible_cards.append("dora")
+			possible_cards.append("6 - dora")
+			possible_cards.append("7 - mickey")
+			possible_cards.append("8 - Paw Patrol")
 		_initialized = true
 	pass
 	
@@ -70,13 +72,16 @@ func get_playing_textures():
 		textures = _load_frozen_textures()
 	if(get_playing_card() == "4 - mermaid"):
 		textures = _load_mermaid_textures()
-	if(_possible_cards.has(get_playing_card())):
-		textures = _load_online_textures()
-	if(get_playing_card() == "dora"):
-		textures = _load_dora_textures()
 	if(get_playing_card() == "5 - sofia"):
 		textures = _load_sofia_textures()
-	
+	if(get_playing_card() == "6 - dora"):
+		textures = _load_dora_textures()
+	if(get_playing_card() == "7 - mickey"):
+		textures = _load_mickey_textures()
+	if(get_playing_card() == "8 - Paw Patrol"):
+		textures = _load_paw_textures()		
+	if(_possible_cards.has(get_playing_card())):
+		textures = _load_online_textures()
 	if(textures.empty()):
 		textures = _load_car_textures()
 	return textures
@@ -172,4 +177,30 @@ func _load_sofia_textures():
 		load("res://sprites/sofia/ruby.png"),
 		load("res://sprites/sofia/sofia.png")
 	]
+	return textures
+	
+	
+func _load_mickey_textures():
+	var textures = {}
+	textures["hidden"] = load("res://sprites/card-background.png")
+	textures["possible"] = [
+		load("res://sprites/mickey/mickey1.png"),
+		load("res://sprites/mickey/mickey2.png"),
+		load("res://sprites/mickey/mickey3.png"),
+		load("res://sprites/mickey/mickey4.png"),
+		load("res://sprites/mickey/mickey5.png"),
+		load("res://sprites/mickey/mickey6.png")
+	]
+	return textures
+	
+func _load_paw_textures():
+	var textures = {}
+	var textures_names = []
+	for i in range(1, 14):
+		textures_names.append("res://sprites/pawpatrol/paw" + str(i) + ".png")
+	textures["hidden"] = load("res://sprites/card-background.png")
+	textures["possible"] = []
+	for file in textures_names:
+		textures["possible"].append(load(file))
+
 	return textures	

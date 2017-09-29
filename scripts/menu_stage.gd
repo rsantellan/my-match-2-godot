@@ -11,7 +11,7 @@ func _ready():
 	pass
 
 func _do_create_buttons():
-	var y = (Globals.get("display/height") / 2) - (game.get_possible_cards().size() * ydelta);
+	var y = (Globals.get("display/height") / 2) - (game.get_possible_cards().size() * ydelta) + ydelta;
 	for possible in game.get_possible_cards():
 		var menu_button = load("res://scenes/menu_button.tscn")
 		var button = menu_button.instance()
