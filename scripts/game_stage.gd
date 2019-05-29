@@ -4,9 +4,7 @@ extends Node
 var cards = []
 var possible_cards = []
 var next_position_x = 0
-var start_position_x = 30
 var next_position_y = 0
-var delta_position = 5
 var _last_press_object
 onready var timer1 = get_node("timer_wait")
 onready var anim_bad = utils.get_main_node().find_node("anim_bad")
@@ -47,14 +45,11 @@ func retrieve_textures():
 func start_cards():
 	print ("starting cards")
 	print ("Set all to 0")
-	cards = shuffleList(possible_cards)
-	var quantity = cards.size()
-	var position = 1
 	next_position_x = 30
 	next_position_y = 0
+	cards = shuffleList(possible_cards)
 	for card in cards:
-		get_node("container").add_child(load_card(card, position, quantity))
-		position += 1
+		get_node("container").add_child(load_card(card))
 	pass
 
 func clean_container():
@@ -73,31 +68,17 @@ func shuffleList(list):
         indexList.remove(x)
         list.remove(x)
     return shuffledList
-
-func is_first_position(position, cardQuantity):
-	if position == 1:
-		return true
-	if position == (cardQuantity / 2) + 1:
-		return true
-	return false
 	
-func load_card(car_obj, position, cardQuantity):
+func load_card(car_obj):
 	var scene = load("res://scenes/bcard.tscn")
 	var bcard = scene.instance()
-	print ("is first position: ", is_first_position(position, cardQuantity))
 	bcard.set_name("scene_"+str(randi()))
-	if is_first_position(position, cardQuantity):
-		next_position_x = (Globals.get("display/width") / 2) - ((bcard.get_width_size() + delta_position) * (cardQuantity / 4))
-		if position > 1:
-			next_position_y = (next_position_y + bcard.get_height_size() + delta_position)
-		print (next_position_x)
-		print (Globals.get("display/width") / 2)
-		print ((bcard.get_width_size() + delta_position))
-		print ((cardQuantity / 4))
-		
 	bcard.change_position(next_position_x, next_position_y)
 	bcard.set_card_obj(car_obj)
-	next_position_x = (next_position_x + bcard.get_width_size() + delta_position)
+	next_position_x = (next_position_x + bcard.get_width_size() + 5)
+	if next_position_x + bcard.get_width_size() > Globals.get("display/width"):
+		next_position_x = 30
+		next_position_y = (next_position_y + bcard.get_height_size() + 5)
 	bcard.connect("pressed", self, "_card_is_pressed",[bcard])
 	return bcard
 
