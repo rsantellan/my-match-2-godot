@@ -28,7 +28,6 @@ func _load_from_url():
 func load_possible_cards():
 	if !_initialized:
 		_load_from_url()
-		_load_lol_textures()
 		#print("possible cards")
 		#print(possible_cards)
 		if(possible_cards.size() == 0):
@@ -46,6 +45,7 @@ func load_possible_cards():
 			possible_cards.append("12 - Bella Durmiente")
 			possible_cards.append("13 - Super DC Girls")
 			possible_cards.append("14 - LOL")
+			possible_cards.append("15 - Troll")
 		_initialized = true
 	pass
 	
@@ -99,6 +99,8 @@ func get_playing_textures():
 		textures = _load_dc_girls_textures()
 	if(get_playing_card() == "14 - LOL"):
 		textures = _load_lol_textures()
+	if(get_playing_card() == "15 - Troll"):
+		textures = _load_troll_textures()
 	if(_possible_cards.has(get_playing_card())):
 		textures = _load_online_textures()
 	if(textures.empty()):
@@ -122,152 +124,93 @@ func _load_online_textures():
 # This is a fallback!! just in case
 func _load_car_textures():
 	var textures = {}
+	var itemsQuantity = 6
 	textures["hidden"] = load("res://sprites/card-background.png")
-	var textures_names = []
-	for i in range(1, 7):
-		textures_names.append("res://sprites/cars/car" + str(i) + ".png")
-	textures["possible"] = []
-	for file in textures_names:
-		textures["possible"].append(load(file))
+	textures["possible"] = _load_rand_textures(itemsQuantity, "res://sprites/cars/car")
 	return textures
 
 func _load_family_textures():
 	var textures = {}
+	var itemsQuantity = 6
 	textures["hidden"] = load("res://sprites/card-background.png")
-	var textures_names = []
-	for i in range(1, 7):
-		textures_names.append("res://sprites/family/family" + str(i) + ".png")
-	textures["possible"] = []
-	for file in textures_names:
-		textures["possible"].append(load(file))
+	textures["possible"] = _load_rand_textures(itemsQuantity, "res://sprites/family/family")
 	return textures
 
 func _load_mermaid_textures():
 	var textures = {}
+	var itemsQuantity = 6
 	textures["hidden"] = load("res://sprites/card-background.png")
-	var textures_names = []
-	for i in range(1, 7):
-		textures_names.append("res://sprites/mermaid/mermaid" + str(i) + ".png")
-	textures["possible"] = []
-	for file in textures_names:
-		textures["possible"].append(load(file))
+	textures["possible"] = _load_rand_textures(itemsQuantity, "res://sprites/mermaid/mermaid")
 	return textures
 
 func _load_frozen_textures():
 	var textures = {}
+	var itemsQuantity = 13
 	textures["hidden"] = load("res://sprites/card-background.png")
-	textures["possible"] = [
-		load("res://sprites/frozen/anna.png"),
-		load("res://sprites/frozen/elsa.png"),
-		load("res://sprites/frozen/hans.png"),
-		load("res://sprites/frozen/kristoff.png"),
-		load("res://sprites/frozen/olaf.png"),
-		load("res://sprites/frozen/sven.png")
-	]
-	return textures	
+	textures["possible"] = _load_rand_textures(itemsQuantity, "res://sprites/frozen/frozen")
+	return textures
 
 func _load_dora_textures():
 	var textures = {}
+	var itemsQuantity = 6
 	textures["hidden"] = load("res://sprites/card-background.png")
-	var textures_names = []
-	for i in range(1, 7):
-		textures_names.append("res://sprites/dora/dora" + str(i) + ".png")
-	textures["possible"] = []
-	for file in textures_names:
-		textures["possible"].append(load(file))
+	textures["possible"] = _load_rand_textures(itemsQuantity, "res://sprites/dora/dora")
 	return textures
 	
 func _load_sofia_textures():
 	var textures = {}
+	var itemsQuantity = 6
 	textures["hidden"] = load("res://sprites/card-background.png")
-	textures["possible"] = [
-		load("res://sprites/sofia/amber.png"),
-		load("res://sprites/sofia/bailywick.png"),
-		load("res://sprites/sofia/jade.png"),
-		load("res://sprites/sofia/james.png"),
-		load("res://sprites/sofia/ruby.png"),
-		load("res://sprites/sofia/sofia.png")
-	]
+	textures["possible"] = _load_rand_textures(itemsQuantity, "res://sprites/sofia/sofia")
 	return textures
-	
 	
 func _load_mickey_textures():
 	var textures = {}
+	var itemsQuantity = 6
 	textures["hidden"] = load("res://sprites/card-background.png")
-	var textures_names = []
-	for i in range(1, 7):
-		textures_names.append("res://sprites/mickey/mickey" + str(i) + ".png")
-	textures["possible"] = []
-	for file in textures_names:
-		textures["possible"].append(load(file))
+	textures["possible"] = _load_rand_textures(itemsQuantity, "res://sprites/mickey/mickey")
 	return textures
 	
 func _load_paw_textures():
 	var textures = {}
-	var textures_names = []
-	for i in range(1, 14):
-		textures_names.append("res://sprites/pawpatrol/paw" + str(i) + ".png")
+	var itemsQuantity = 13
 	textures["hidden"] = load("res://sprites/card-background.png")
-	textures["possible"] = []
-	for file in textures_names:
-		textures["possible"].append(load(file))
+	textures["possible"] = _load_rand_textures(itemsQuantity, "res://sprites/pawpatrol/paw")
 	return textures
 	
 func _load_doc_textures():
 	var textures = {}
-	var textures_names = []
-	for i in range(1, 12):
-		textures_names.append("res://sprites/doc/doc" + str(i) + ".png")
+	var itemsQuantity = 11
 	textures["hidden"] = load("res://sprites/card-background.png")
-	textures["possible"] = []
-	for file in textures_names:
-		textures["possible"].append(load(file))
-	#get_main_node().find_node("texture_background").set_texture(load("res://sprites/doc/doc/background.png"));
+	textures["possible"] = _load_rand_textures(itemsQuantity, "res://sprites/doc/doc")
 	return textures
 	
 func _load_peppa_textures():
 	var textures = {}
-	var textures_names = []
-	for i in range(1, 16):
-		textures_names.append("res://sprites/peppa/peppa" + str(i) + ".png")
+	var itemsQuantity = 15
 	textures["hidden"] = load("res://sprites/card-background.png")
-	textures["possible"] = []
-	for file in textures_names:
-		textures["possible"].append(load(file))
+	textures["possible"] = _load_rand_textures(itemsQuantity, "res://sprites/peppa/peppa")
 	return textures
 	
 func _load_kitty_textures():
 	var textures = {}
-	var textures_names = []
-	for i in range(1, 12):
-		textures_names.append("res://sprites/kitty/kitty" + str(i) + ".png")
+	var itemsQuantity = 11
 	textures["hidden"] = load("res://sprites/card-background.png")
-	textures["possible"] = []
-	for file in textures_names:
-		textures["possible"].append(load(file))
-	#get_main_node().find_node("texture_background").set_texture(load("res://sprites/doc/doc/background.png"));
+	textures["possible"] = _load_rand_textures(itemsQuantity, "res://sprites/kitty/kitty")
 	return textures
 	
 func _load_belladurmiente_textures():
 	var textures = {}
-	var textures_names = []
-	for i in range(1, 8):
-		textures_names.append("res://sprites/belladurmiente/bella" + str(i) + ".png")
+	var itemsQuantity = 8
 	textures["hidden"] = load("res://sprites/card-background.png")
-	textures["possible"] = []
-	for file in textures_names:
-		textures["possible"].append(load(file))
+	textures["possible"] = _load_rand_textures(itemsQuantity, "res://sprites/belladurmiente/bella")
 	return textures
 	
 func _load_dc_girls_textures():
 	var textures = {}
-	var textures_names = []
-	for i in range(1, 9):
-		textures_names.append("res://sprites/supergirls/dc" + str(i) + ".png")
+	var itemsQuantity = 10
 	textures["hidden"] = load("res://sprites/card-background.png")
-	textures["possible"] = []
-	for file in textures_names:
-		textures["possible"].append(load(file))
+	textures["possible"] = _load_rand_textures(itemsQuantity, "res://sprites/supergirls/dc")
 	return textures
 	
 func _load_lol_textures():
@@ -277,14 +220,25 @@ func _load_lol_textures():
 	textures["possible"] = _load_rand_textures(itemsQuantity, "res://sprites/lol/lol")
 	return textures
 	
+func _load_troll_textures():
+	var textures = {}
+	var itemsQuantity = 14
+	textures["hidden"] = load("res://sprites/card-background.png")
+	textures["possible"] = _load_rand_textures(itemsQuantity, "res://sprites/troll/troll")
+	return textures
+	
 func _load_rand_textures(itemsQuantity, path):
 	var selected = {}
 	var possible = []
 	var textures_names = []
-	while selected.size() <= itemsQuantity and selected.size() < _max_cards:
-		var rand_number = randi()%itemsQuantity+1
-		if not selected.has(rand_number):
-			selected[rand_number] = rand_number
+	if itemsQuantity < _max_cards:
+		for i in range(1, itemsQuantity + 1):
+			selected[i] = i
+	else:
+		while selected.size() <= itemsQuantity or selected.size() < _max_cards:
+			var rand_number = randi()%itemsQuantity+1
+			if not selected.has(rand_number):
+				selected[rand_number] = rand_number
 	for i in selected.keys():
 		textures_names.append(str(path) + str(i) + ".png")
 	for file in textures_names:
