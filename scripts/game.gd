@@ -9,7 +9,7 @@ var playing_card
 var possible_cards = []
 var _possible_cards = {}
 var _initialized = false
-
+var _max_cards = 15
 var _json_url = 'http://localhost/data.php'
 #var _json_url = 'http://rodrigosantellan.com/data.php'
 
@@ -28,17 +28,24 @@ func _load_from_url():
 func load_possible_cards():
 	if !_initialized:
 		_load_from_url()
+		_load_lol_textures()
 		#print("possible cards")
 		#print(possible_cards)
 		if(possible_cards.size() == 0):
-			possible_cards.append("1 - cars")
-			possible_cards.append("2 - family")
-			possible_cards.append("3 - frozen")
-			possible_cards.append("4 - mermaid")
-			possible_cards.append("5 - sofia")
+			possible_cards.append("1 - Autos")
+			possible_cards.append("2 - Familia")
+			possible_cards.append("3 - Frozen")
+			possible_cards.append("4 - Sirenita")
+			possible_cards.append("5 - Sofia")
 			possible_cards.append("6 - dora")
 			possible_cards.append("7 - mickey")
 			possible_cards.append("8 - Paw Patrol")
+			possible_cards.append("9 - Doctora Juguetes")
+			possible_cards.append("10 - Peppa Pig")
+			possible_cards.append("11 - Hello Kitty")
+			possible_cards.append("12 - Bella Durmiente")
+			possible_cards.append("13 - Super DC Girls")
+			possible_cards.append("14 - LOL")
 		_initialized = true
 	pass
 	
@@ -59,27 +66,39 @@ func get_possible_cards():
 	
 func get_playing_card():
 	if playing_card == null:
-		return "1 - cars"
+		return "1 - Autos"
 	return playing_card
 	
 func get_playing_textures():
 	var textures = {}
-	if(get_playing_card() == "1 - cars"):
+	if(get_playing_card() == "1 - Autos"):
 		textures = _load_car_textures()
-	if(get_playing_card() == "2 - family"):
+	if(get_playing_card() == "2 - Familia"):
 		textures = _load_family_textures()
-	if(get_playing_card() == "3 - frozen"):
+	if(get_playing_card() == "3 - Frozen"):
 		textures = _load_frozen_textures()
-	if(get_playing_card() == "4 - mermaid"):
+	if(get_playing_card() == "4 - Sirenita"):
 		textures = _load_mermaid_textures()
-	if(get_playing_card() == "5 - sofia"):
+	if(get_playing_card() == "5 - Sofia"):
 		textures = _load_sofia_textures()
 	if(get_playing_card() == "6 - dora"):
 		textures = _load_dora_textures()
 	if(get_playing_card() == "7 - mickey"):
 		textures = _load_mickey_textures()
 	if(get_playing_card() == "8 - Paw Patrol"):
-		textures = _load_paw_textures()		
+		textures = _load_paw_textures()
+	if(get_playing_card() == "9 - Doctora Juguetes"):
+		textures = _load_doc_textures()
+	if(get_playing_card() == "10 - Peppa Pig"):
+		textures = _load_peppa_textures()
+	if(get_playing_card() == "11 - Hello Kitty"):
+		textures = _load_kitty_textures()
+	if(get_playing_card() == "12 - Bella Durmiente"):
+		textures = _load_belladurmiente_textures()
+	if(get_playing_card() == "13 - Super DC Girls"):
+		textures = _load_dc_girls_textures()
+	if(get_playing_card() == "14 - LOL"):
+		textures = _load_lol_textures()
 	if(_possible_cards.has(get_playing_card())):
 		textures = _load_online_textures()
 	if(textures.empty()):
@@ -95,7 +114,7 @@ func _load_online_textures():
 	textures["hidden"] = load(path + name)
 	textures["possible"] = []
 	for itemName in _possible_cards[get_playing_card()]['possible'].keys():
-		print ("aca + " + itemName)
+		#print ("aca + " + itemName)
 		http_manager.save_image_from_url(path, itemName, _possible_cards[get_playing_card()]['possible'][itemName])
 		textures["possible"].append(load(path + name))
 	return textures;
@@ -104,41 +123,35 @@ func _load_online_textures():
 func _load_car_textures():
 	var textures = {}
 	textures["hidden"] = load("res://sprites/card-background.png")
-	textures["possible"] = [
-		load("res://sprites/cars/car1.png"),
-		load("res://sprites/cars/car2.png"),
-		load("res://sprites/cars/car3.png"),
-		load("res://sprites/cars/car4.png"),
-		load("res://sprites/cars/car5.png"),
-		load("res://sprites/cars/car6.png")
-	]
+	var textures_names = []
+	for i in range(1, 7):
+		textures_names.append("res://sprites/cars/car" + str(i) + ".png")
+	textures["possible"] = []
+	for file in textures_names:
+		textures["possible"].append(load(file))
 	return textures
 
 func _load_family_textures():
 	var textures = {}
 	textures["hidden"] = load("res://sprites/card-background.png")
-	textures["possible"] = [
-		load("res://sprites/family/family1.png"),
-		load("res://sprites/family/family2.png"),
-		load("res://sprites/family/family3.png"),
-		load("res://sprites/family/family4.png"),
-		load("res://sprites/family/family5.png"),
-		load("res://sprites/family/family6.png")
-	]
+	var textures_names = []
+	for i in range(1, 7):
+		textures_names.append("res://sprites/family/family" + str(i) + ".png")
+	textures["possible"] = []
+	for file in textures_names:
+		textures["possible"].append(load(file))
 	return textures
 
 func _load_mermaid_textures():
 	var textures = {}
 	textures["hidden"] = load("res://sprites/card-background.png")
-	textures["possible"] = [
-		load("res://sprites/mermaid/mermaid1.png"),
-		load("res://sprites/mermaid/mermaid2.png"),
-		load("res://sprites/mermaid/mermaid3.png"),
-		load("res://sprites/mermaid/mermaid4.png"),
-		load("res://sprites/mermaid/mermaid5.png"),
-		load("res://sprites/mermaid/mermaid6.png")
-	]
-	return textures	
+	var textures_names = []
+	for i in range(1, 7):
+		textures_names.append("res://sprites/mermaid/mermaid" + str(i) + ".png")
+	textures["possible"] = []
+	for file in textures_names:
+		textures["possible"].append(load(file))
+	return textures
 
 func _load_frozen_textures():
 	var textures = {}
@@ -156,15 +169,13 @@ func _load_frozen_textures():
 func _load_dora_textures():
 	var textures = {}
 	textures["hidden"] = load("res://sprites/card-background.png")
-	textures["possible"] = [
-		load("res://sprites/dora/dora1.png"),
-		load("res://sprites/dora/dora2.png"),
-		load("res://sprites/dora/dora3.png"),
-		load("res://sprites/dora/dora4.png"),
-		load("res://sprites/dora/dora5.png"),
-		load("res://sprites/dora/dora6.png")
-	]
-	return textures	
+	var textures_names = []
+	for i in range(1, 7):
+		textures_names.append("res://sprites/dora/dora" + str(i) + ".png")
+	textures["possible"] = []
+	for file in textures_names:
+		textures["possible"].append(load(file))
+	return textures
 	
 func _load_sofia_textures():
 	var textures = {}
@@ -183,14 +194,12 @@ func _load_sofia_textures():
 func _load_mickey_textures():
 	var textures = {}
 	textures["hidden"] = load("res://sprites/card-background.png")
-	textures["possible"] = [
-		load("res://sprites/mickey/mickey1.png"),
-		load("res://sprites/mickey/mickey2.png"),
-		load("res://sprites/mickey/mickey3.png"),
-		load("res://sprites/mickey/mickey4.png"),
-		load("res://sprites/mickey/mickey5.png"),
-		load("res://sprites/mickey/mickey6.png")
-	]
+	var textures_names = []
+	for i in range(1, 7):
+		textures_names.append("res://sprites/mickey/mickey" + str(i) + ".png")
+	textures["possible"] = []
+	for file in textures_names:
+		textures["possible"].append(load(file))
 	return textures
 	
 func _load_paw_textures():
@@ -202,5 +211,82 @@ func _load_paw_textures():
 	textures["possible"] = []
 	for file in textures_names:
 		textures["possible"].append(load(file))
-
-	return textures	
+	return textures
+	
+func _load_doc_textures():
+	var textures = {}
+	var textures_names = []
+	for i in range(1, 12):
+		textures_names.append("res://sprites/doc/doc" + str(i) + ".png")
+	textures["hidden"] = load("res://sprites/card-background.png")
+	textures["possible"] = []
+	for file in textures_names:
+		textures["possible"].append(load(file))
+	#get_main_node().find_node("texture_background").set_texture(load("res://sprites/doc/doc/background.png"));
+	return textures
+	
+func _load_peppa_textures():
+	var textures = {}
+	var textures_names = []
+	for i in range(1, 16):
+		textures_names.append("res://sprites/peppa/peppa" + str(i) + ".png")
+	textures["hidden"] = load("res://sprites/card-background.png")
+	textures["possible"] = []
+	for file in textures_names:
+		textures["possible"].append(load(file))
+	return textures
+	
+func _load_kitty_textures():
+	var textures = {}
+	var textures_names = []
+	for i in range(1, 12):
+		textures_names.append("res://sprites/kitty/kitty" + str(i) + ".png")
+	textures["hidden"] = load("res://sprites/card-background.png")
+	textures["possible"] = []
+	for file in textures_names:
+		textures["possible"].append(load(file))
+	#get_main_node().find_node("texture_background").set_texture(load("res://sprites/doc/doc/background.png"));
+	return textures
+	
+func _load_belladurmiente_textures():
+	var textures = {}
+	var textures_names = []
+	for i in range(1, 8):
+		textures_names.append("res://sprites/belladurmiente/bella" + str(i) + ".png")
+	textures["hidden"] = load("res://sprites/card-background.png")
+	textures["possible"] = []
+	for file in textures_names:
+		textures["possible"].append(load(file))
+	return textures
+	
+func _load_dc_girls_textures():
+	var textures = {}
+	var textures_names = []
+	for i in range(1, 9):
+		textures_names.append("res://sprites/supergirls/dc" + str(i) + ".png")
+	textures["hidden"] = load("res://sprites/card-background.png")
+	textures["possible"] = []
+	for file in textures_names:
+		textures["possible"].append(load(file))
+	return textures
+	
+func _load_lol_textures():
+	var textures = {}
+	var itemsQuantity = 17
+	textures["hidden"] = load("res://sprites/card-background.png")
+	textures["possible"] = _load_rand_textures(itemsQuantity, "res://sprites/lol/lol")
+	return textures
+	
+func _load_rand_textures(itemsQuantity, path):
+	var selected = {}
+	var possible = []
+	var textures_names = []
+	while selected.size() <= itemsQuantity and selected.size() < _max_cards:
+		var rand_number = randi()%itemsQuantity+1
+		if not selected.has(rand_number):
+			selected[rand_number] = rand_number
+	for i in selected.keys():
+		textures_names.append(str(path) + str(i) + ".png")
+	for file in textures_names:
+		possible.append(load(file))
+	return possible
